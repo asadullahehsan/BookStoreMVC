@@ -1,5 +1,6 @@
 ﻿using BookStoreMVC.Models;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace BookStoreMVC.Controllers;
 
@@ -21,6 +22,22 @@ public class BooksController : Controller
             PublishDate = new System.DateTime(2025, 05, 21),
             Authors = new List<string> { "Jason De Oliveira", "Michel Bruchet" }
         };
+        return View(book);
+    }
+
+    public IActionResult Create()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Create(Book book)
+    {
+        if(ModelState.IsValid)
+        {
+            return RedirectToAction("Index");
+        }
         return View(book);
     }
 }
